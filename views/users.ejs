@@ -18,6 +18,14 @@
         <![endif]-->
         <form method="POST" action="/users" enctype="multipart/form-data">
             <input type="file" name="fingerprint">
+            <input type="name" name="name">
+            <input type="email" name="email">
+            <input type="password" name="password">
+            <select name="accessLevel">
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+            </select>
             <input type="submit">
         </form>
     </body>
