@@ -11,7 +11,9 @@ const User = require('../controllers/userController')
  */
 const upload = require('../middlewares/multer')
 
-router.get('/users', (req, res) => res.render('users'))
+router.get('/users/view', (req, res) => res.render('users'))
+
 router.post('/users', upload.single('fingerprint'), User.create)
+router.get('/users', User.list)
 
 module.exports = router
