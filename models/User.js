@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   fingerprint: { data: Buffer, contentType: String },
-  accessLevel: { type: Number, enum: [1, 2, 2], required: true }
+  accessLevel: { type: Number, enum: [1, 2, 3], required: true }
 })
 
 const User = mongoose.model('User', UserSchema)
