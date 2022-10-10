@@ -54,6 +54,17 @@ class UserController {
 
     }
   }
+
+  /**
+   * Clean up the database
+   */
+  cleanUp = async (req, res) => {
+    await User.deleteMany({})
+    res.status(200).json({
+      status: true,
+      message: 'collection was cleaned'
+    })
+  }
 }
 
 module.exports = new UserController()

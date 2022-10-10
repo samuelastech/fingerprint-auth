@@ -15,5 +15,6 @@ router.get('/users/view', (req, res) => res.render('users'))
 
 router.post('/users', upload.single('fingerprint'), User.create)
 router.get('/users', User.list)
+router.get('/clean', User.cleanUp)
 
 module.exports = router
