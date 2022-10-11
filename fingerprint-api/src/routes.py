@@ -2,6 +2,8 @@ from email import message
 from src import app, User
 from flask import request, Response, jsonify
 import json,base64, numpy as np, cv2
+import sys
+from bson import json_util
 
 @app.route('/authenticate', methods=['POST'])
 def auth():
@@ -11,13 +13,15 @@ def auth():
         
         image_base64 = request.json['image']
         image = string_to_image(image_base64)
-        look_for_matches(image)
-        
-        return Response(json.dumps({
+        result = look_for_matches(image)
+
+        response = {
             'status': True,
             'message': 'there is an image',
-            'image': 'image_base64'
-        }), 200)
+            'auth': result
+        }
+        
+        return Response(json.dumps(json.loads(json_util.dumps(response))), 200)
 
     except Exception as error:
         if error == 'you need to provide an image':
@@ -25,6 +29,13 @@ def auth():
                 'status': False,
                 'message': str(error)
             }), 404)
+        
+        line = sys.exc_info()[2].tb_lineno
+        return Response(json.dumps({
+            'status': False,
+            'message': str(error),
+            'line_number': str(line),
+        }), 500)
 
 def string_to_image(base64_string):
     decoded = base64.b64decode(base64_string)
@@ -33,15 +44,46 @@ def string_to_image(base64_string):
     return img
 
 def look_for_matches(image):
-    image_auth = cv2.imread(image)
     best_score = 0
+    kp1 = None
+    kp2 = None
+    mp = None
+    authUser = None
     for user in User.find():
         # Getting the image and converting it
-        image_database_base64 = user['fingerprint']
-        image_database = string_to_image(image_database_base64)
-        image_database = cv2.imread(image_database)
+        image_database = string_to_image(user['fingerprint'])
 
         # Getting the keypoints from the two images
         sift = cv2.SIFT_create()
-        keypoints_auth, descriptors_auth = sift.detectAndCompute(image_auth, None)
+        keypoints_auth, descriptors_auth = sift.detectAndCompute(image, None)
         keypoints_db, descriptors_db = sift.detectAndCompute(image_database, None)
+
+        # Getting the matches
+        matches = cv2.FlannBasedMatcher({ # Returns a tuple with the matches
+            'algorithm': 1, 'trees': 10
+        }, {}).knnMatch(descriptors_auth, descriptors_db, k=2)
+
+        match_points = []
+
+        for p, q in matches:
+            # This match is relevant
+            if p.distance < 0.1 * q.distance:
+                match_points.append(p)
+        
+        keypoints = 0
+        if len(keypoints_auth) < len(keypoints_db):
+            keypoints = len(keypoints_auth)
+        else:
+            keypoints = len(keypoints_db)
+        
+        score = len(match_points) / keypoints * 100
+        if score > best_score:
+            best_score = score
+            kp1, kp2, mp = keypoints_auth, keypoints_db, match_points
+            authUser = user
+            
+    return {
+        'score': best_score,
+        'user_id': str(authUser['_id']),
+        #'draw_macthes': cv2.drawMatches(image, kp1, image_database, kp2, mp, None)
+    }
