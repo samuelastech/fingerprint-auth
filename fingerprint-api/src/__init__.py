@@ -8,5 +8,6 @@ app = Flask(__name__)
 app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
 client = PyMongo(app)
 database = client.db
+User = client.db['users']
 
 from src import routes
