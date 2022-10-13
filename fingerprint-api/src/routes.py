@@ -81,7 +81,7 @@ def look_for_matches(image):
             best_score = score
             kp1, kp2, mp = keypoints_auth, keypoints_db, match_points
             authUser = user
-            
+
     return {
         'score': best_score,
         'user_id': str(authUser['_id']),
