@@ -16,9 +16,22 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <form method="POST" action="/login" enctype="multipart/form-data">
-            <input type="file" name="fingerprint">
-            <input type="submit">
-        </form>
+        <div class="container-main">
+            <div class="forms-container">
+                <div class="signup-signin">
+                    <form method="POST" action="/login" enctype="multipart/form-data" class="signin">
+                        <h2 class="title">Sign in</h2>
+                        <div class="input-field">
+                            <input type="file" name="fingerprint">
+                        </div>
+                        <input type="submit" value="Login" class="btn solid">
+                    </form>
+                </div>
+            </div>
+
+            <div class="panels-container">
+
+            </div>
+        </div>
     </body>
 </html>

@@ -12,7 +12,7 @@ const Auth = require('../controllers/authController')
 const upload = require('../middlewares/multer')
 const fingerprint = require('../middlewares/fingerprint')
 
-router.get('/login', (req, res) => res.render('login'))
+router.get('/login', (req, res) => res.render('form'))
 router.post('/login', [fingerprint.verify, upload.single('fingerprint')], Auth.login)
 
 module.exports = router
