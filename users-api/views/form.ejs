@@ -7,9 +7,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Ministry of Environment | Login</title>
+        <title>Ministry of Environment</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="/lineicons-free-basic-3.0/icon-font/lineicons.css">
         <link rel="stylesheet" href="/css/main.css">
     </head>
     <body>
@@ -20,10 +21,34 @@
             <div class="signup-signin">
                 <form method="POST" action="/login" enctype="multipart/form-data" class="signin-form">
                     <h2 class="title">Sign in</h2>
-                    <div class="input-field">
-                        <input type="file" name="fingerprint">
-                    </div>
+                    <input type="file" name="fingerprint">
                     <input type="submit" value="Login" class="button solid">
+                </form>
+
+                <form method="POST" action="/login" enctype="multipart/form-data" class="signup-form">
+                    <h2 class="title">Sign up</h2>
+
+                    <div class="input-field">
+                        <i class="lni lni-pencil icon"></i>
+                        <input type="text" name="name" placeholder="Name" class="input">
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="lni lni-user icon"></i>
+                        <input type="text" name="username" placeholder="Username" class="input">
+                    </div>
+                    
+                    <div class="input-field">
+                        <i class="lni lni-envelope icon"></i>
+                        <input type="email" name="email" placeholder="Email" class="input">
+                    </div>
+
+                    <div class="input-field">
+                        <i class="lni lni-lock-alt icon"></i>
+                        <input type="password" name="password" placeholder="Password" class="input">
+                    </div>
+
+                    <input type="submit" value="Sign up" class="button solid">
                 </form>
             </div>
         </div>
