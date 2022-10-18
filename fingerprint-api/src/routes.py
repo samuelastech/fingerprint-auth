@@ -22,13 +22,17 @@ def auth():
         image = string_to_image(image_base64)
         result = look_for_matches(image)
 
-        response = {
-            'status': True,
-            'message': 'there is an image',
-            'auth': result
-        }
-        
-        return Response(json.dumps(json.loads(json_util.dumps(response))), 200)
+        if not result:
+            return Response(json.dumps({
+                'status': False,
+                'message': 'we could not identify this fingerprint'
+            }), 404)
+        else: 
+            response = {
+                'status': True,
+                'auth': result
+            }
+            return Response(json.dumps(json.loads(json_util.dumps(response))), 200)
 
     except Exception as error:
         if str(error) == 'you need to provide an image tag':
@@ -99,8 +103,11 @@ def look_for_matches(image):
             kp1, kp2, mp = keypoints_auth, keypoints_db, match_points
             authUser = user
 
-    return {
-        'score': best_score,
-        'user_id': str(authUser['_id']),
-        #'draw_macthes': cv2.drawMatches(image, kp1, image_database, kp2, mp, None)
-    }
+    if best_score < 90:
+        return False
+    else:
+        return {
+            'score': best_score,
+            'user_id': str(authUser['_id']),
+            #'draw_macthes': cv2.drawMatches(image, kp1, image_database, kp2, mp, None)
+        }
