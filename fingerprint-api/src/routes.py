@@ -1,15 +1,22 @@
-from email import message
-from src import app, User
-from flask import request, Response, jsonify
-import json,base64, numpy as np, cv2
+import base64
+import json
 import sys
+
+import cv2
+import numpy as np
 from bson import json_util
+from flask import Response, jsonify, request
+from src import User, app
+
 
 @app.route('/authenticate', methods=['POST'])
 def auth():
     try:
         if not 'image' in request.json:
-            raise Exception('you need to provide an image')
+            raise Exception('you need to provide an image tag')
+        
+        if not request.json['image']:
+            raise Exception('your image cannot be null')
         
         image_base64 = request.json['image']
         image = string_to_image(image_base64)
@@ -24,7 +31,13 @@ def auth():
         return Response(json.dumps(json.loads(json_util.dumps(response))), 200)
 
     except Exception as error:
-        if error == 'you need to provide an image':
+        if str(error) == 'you need to provide an image tag':
+            return Response(json.dumps({
+                'status': False,
+                'message': str(error)
+            }), 404)
+
+        if str(error) == 'your image cannot be null':
             return Response(json.dumps({
                 'status': False,
                 'message': str(error)
