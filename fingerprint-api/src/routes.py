@@ -63,6 +63,10 @@ def look_for_matches(image):
     mp = None
     authUser = None
     for user in User.find():
+        # Registered user has not a figerptint
+        if not 'fingerprint' in user:
+            continue
+
         # Getting the image and converting it
         image_database = string_to_image(user['fingerprint'])
 
