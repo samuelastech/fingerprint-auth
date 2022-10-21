@@ -1,13 +1,20 @@
 import base64
 import json
 import sys
+import matplotlib.pyplot as plt
 
 import cv2
 import numpy as np
-from bson import json_util
 from flask import Response, jsonify, request
 from src import User, app
 
+from tensorflow.keras import datasets, layers, models
+
+@app.route('/validate', methods=['POST'])
+def valiate():
+    # Pre-processing
+    (training_images, training_labels), (testing_images, testing_labels) = datasets.cifar10.load_data()
+    training_images, testing_images = training_images / 255, testing_images / 255
 
 @app.route('/authenticate', methods=['POST'])
 def auth():
@@ -32,7 +39,7 @@ def auth():
                 'status': True,
                 'auth': result
             }
-            return Response(json.dumps(json.loads(json_util.dumps(response))), 200)
+            return Response(json.dumps(json.loads(json.dumps(response))), 200)
 
     except Exception as error:
         if str(error) == 'you need to provide an image tag':
