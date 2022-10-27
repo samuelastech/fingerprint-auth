@@ -11,7 +11,7 @@ from src import User, app
 from tensorflow.keras import datasets, layers, models
 
 @app.route('/validate', methods=['POST'])
-def valiate():
+def validate():
     # Pre-processing
     (training_images, training_labels), (testing_images, testing_labels) = datasets.cifar10.load_data()
     training_images, testing_images = training_images / 255, testing_images / 255
