@@ -10,7 +10,7 @@ flask = "*"
 flask-pymongo = "*"
 opencv-python = "*"
 python-dotenv = "*"
-tensorflow = "*"
+tensorflow = "==2.9.2"
 
 [dev-packages]
 
