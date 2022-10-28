@@ -2,8 +2,9 @@
 @import url('normalize.css');
 
 :root{
-  --main-color: #53DB14;
-  --main-color-lighten: ;
+  --main-color: rgb(114, 246, 116);
+  --main-color-darken: #13D118;
+  --main-color-lighten: #A6DB14;
 }
 
 body,
@@ -104,7 +105,7 @@ form.sign-in-form {
 
 .btn {
   width: 150px;
-  background-color: #5995fd;
+  background-color: var(--main-color);
   border: none;
   outline: none;
   height: 49px;
@@ -118,7 +119,7 @@ form.sign-in-form {
 }
 
 .btn:hover {
-  background-color: #4d84e2;
+  background-color: var(--main-color-darken);
 }
 
 .panels-container {
@@ -139,7 +140,7 @@ form.sign-in-form {
   top: -10%;
   right: 48%;
   transform: translateY(-50%);
-  background-image: linear-gradient(-45deg, #4481eb 0%, #04befe 100%);
+  background-image: linear-gradient(-45deg, var(--main-color) 0%, var(--main-color-lighten) 100%);
   transition: 1.8s ease-in-out;
   border-radius: 50%;
   z-index: 6;
@@ -195,6 +196,10 @@ form.sign-in-form {
   height: 41px;
   font-weight: 600;
   font-size: 0.8rem;
+}
+
+.btn.transparent:hover {
+  background-color: var(--main-color-darken);
 }
 
 .right-panel .image,
