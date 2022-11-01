@@ -1,4 +1,7 @@
 import os
+os.environ['TF_ENABLE_ONEDNN_OPTS']='0'
+os.environ['CUDA_VISIBLE_DEVICES']= "0"
+
 import cv2
 import imghdr
 import tensorflow as tf
@@ -29,10 +32,27 @@ data = tf.keras.utils.image_dataset_from_directory('data') # Pre-process the ima
 data_iterator = data.as_numpy_iterator() # Allowing accessing the data pipeline, looping through it
 batch = data_iterator.next() # Actually accessing the data pipeline, grabbing one batch back
 
-# batch[0] - brings the images as numpy arrays
-# batch[1] - brings the labels, 0 is equal to a fingerprint
+# batch[0] - images as numpy arrays
+# batch[1] - labels, 0 is equal to a fingerprint
 
+# PRE-PROCESSING
+# Scale data
+data = data.map(lambda x, y: (x / 255, y))
+scaled_iterator = data.as_numpy_iterator()
+scaled_batch = scaled_iterator.next()
+
+# Partitioning the dataset
+train_size = int(len(data)*.7)
+val_size = int(len(data)*.2)+1
+test_size = int(len(data)*.1)+1
+
+train = data.take(train_size)
+val = data.skip(train_size).take(val_size)
+test = data.skip(train_size+val_size).take(test_size)
+
+'''
 fig, ax = plt.subplots(ncols=4, figsize=(20,20))
-for i, img in enumerate(batch[0][:4]):
-    ax[i].imshow(img.astype(int))
-    ax[i].title.set_text(batch[1][i])
+for idx, img in enumerate(scaled_batch[0][:4]):
+    ax[idx].imshow(img)
+    ax[idx].title.set_text(scaled_batch[1][idx])
+'''
