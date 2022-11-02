@@ -91,6 +91,17 @@ for batch in test.as_numpy_iterator():
 
 print(f'Precision: {pre.result().numpy()},\nRecall: {re.result().numpy()},\nAccuracy: {acc.result().numpy()}')
 
+# Testing the model
+imgTest = cv2.imread('random-fingerprint.jpg')
+resize = tf.image.resize(imgTest, (256,256))
+yhat = model.predict(numpy.expand_dims(resize/255, 0))
+print(yhat)
+if yhat > 0.: 
+    print(f'Predicted class is Fingerprint')
+else:
+    print(f'What is it?')
+
+
 '''
 fig, ax = plt.subplots(ncols=4, figsize=(20,20))
 for idx, img in enumerate(scaled_batch[0][:4]):
