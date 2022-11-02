@@ -69,6 +69,11 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile('adam', loss=tf.losses.BinaryCrossentropy(), metrics=['accuracy'])
 model.summary()
 
+# Training the DNN
+# With a GPU it goes faster, but you still able to do this without it
+logdir='logs'
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
+hist = model.fit(train, epochs=3, validation_data=val, callbacks=[tensorboard_callback])
 
 '''
 fig, ax = plt.subplots(ncols=4, figsize=(20,20))
