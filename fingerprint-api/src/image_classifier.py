@@ -73,7 +73,23 @@ model.summary()
 # With a GPU it goes faster, but you still able to do this without it
 logdir='logs'
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
-hist = model.fit(train, epochs=3, validation_data=val, callbacks=[tensorboard_callback])
+hist = model.fit(train, epochs=1, validation_data=val, callbacks=[tensorboard_callback])
+
+# Evaluate
+from tensorflow.keras.metrics import Precision, Recall, BinaryAccuracy
+
+pre = Precision()
+re = Recall()
+acc = BinaryAccuracy()
+
+for batch in test.as_numpy_iterator(): 
+    X, y = batch
+    yhat = model.predict(X)
+    pre.update_state(y, yhat)
+    re.update_state(y, yhat)
+    acc.update_state(y, yhat)
+
+print(f'Precision: {pre.result().numpy()},\nRecall: {re.result().numpy()},\nAccuracy: {acc.result().numpy()}')
 
 '''
 fig, ax = plt.subplots(ncols=4, figsize=(20,20))
