@@ -73,7 +73,7 @@ model.summary()
 # With a GPU it goes faster, but you still able to do this without it
 logdir='logs'
 tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=logdir)
-hist = model.fit(train, epochs=1, validation_data=val, callbacks=[tensorboard_callback])
+hist = model.fit(train, epochs=20, validation_data=val, callbacks=[tensorboard_callback])
 
 # Evaluate
 from tensorflow.keras.metrics import Precision, Recall, BinaryAccuracy
@@ -96,15 +96,16 @@ imgTest = cv2.imread('random-fingerprint.jpg')
 resize = tf.image.resize(imgTest, (256,256))
 yhat = model.predict(numpy.expand_dims(resize/255, 0))
 print(yhat)
-if yhat > 0.: 
+if yhat > 0.5: 
     print(f'Predicted class is Fingerprint')
 else:
     print(f'What is it?')
 
+# Saving the model to use it later
+model.save(os.path.join('models','imageclassifier.h5'))
 
 '''
-fig, ax = plt.subplots(ncols=4, figsize=(20,20))
-for idx, img in enumerate(scaled_batch[0][:4]):
-    ax[idx].imshow(img)
-    ax[idx].title.set_text(scaled_batch[1][idx])
+To use the model import the dependencie 'from tensorflow.keras.models import load_model'
+Load it 'new_model = load_model('imageclassifier.h5')'
+Then, make the predict 'new_model.predict(np.expand_dims(resize/255, 0))'
 '''
