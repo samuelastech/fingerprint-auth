@@ -4,7 +4,6 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-matplotlib = "*"
 numpy = "*"
 flask = "*"
 flask-pymongo = "*"
