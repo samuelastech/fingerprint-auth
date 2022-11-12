@@ -36,13 +36,14 @@ def validate():
         if yhat > 0.5:
             raise Exception('predicted class is Non-fingerprint')
         else:
-            return Response(json.dump({
+            return Response(json.dumps({
                 'status': True,
                 'message': 'predicted class is Fingerprint',
                 'score': str(predict_score)
             }), 200)
 
     except Exception as error:
+        print(error)
         if str(error) == 'you need to provide an image tag':
             handle(error)
 
