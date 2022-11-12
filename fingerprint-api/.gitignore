@@ -26,4 +26,3 @@ htmlcov/
 .coverage.*
 *,cover
 logs
-random-fingerprint*

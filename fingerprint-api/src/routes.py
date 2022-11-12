@@ -1,20 +1,71 @@
 import base64
 import json
 import sys
-import matplotlib.pyplot as plt
+import os
 
 import cv2
 import numpy as np
 from flask import Response, jsonify, request
 from src import User, app
 
-from tensorflow.keras import datasets, layers, models
+import tensorflow as tf
+from tensorflow.keras.models import load_model
+
+predict_score = None
 
 @app.route('/validate', methods=['POST'])
 def validate():
-    # Pre-processing
-    (training_images, training_labels), (testing_images, testing_labels) = datasets.cifar10.load_data()
-    training_images, testing_images = training_images / 255, testing_images / 255
+    try:
+        if not 'image' in request.json:
+            raise Exception('you need to provide an image tag')
+        
+        if not request.json['image']:
+            raise Exception('your image cannot be null')
+
+        # Getting the image from rquisition and resizing it
+        image_base64 = request.json['image']
+        decoded_image = string_to_image(image_base64)
+        decoded_image = decoded_image[:,:,:3]
+        image_resized = tf.image.resize(decoded_image, (256, 256))
+
+        # Loading the model and predicting
+        classificator = load_model('src/models/fingerprint.h5')
+        yhat = classificator.predict(np.expand_dims(image_resized/255, 0))
+        predict_score = yhat
+        
+        if yhat > 0.5:
+            raise Exception('predicted class is Non-fingerprint')
+        else:
+            return Response(json.dump({
+                'status': True,
+                'message': 'predicted class is Fingerprint',
+                'score': str(predict_score)
+            }), 200)
+
+    except Exception as error:
+        if str(error) == 'you need to provide an image tag':
+            handle(error)
+
+        if str(error) == 'your image cannot be null':
+            handle(error)
+
+        if str(error) == 'predicted class is Non-fingerprint':
+            return Response(json.dumps({
+                'status': False,
+                'message': str(error),
+                'score': str(predict_score)
+            }), 400)
+
+        return Response(json.dumps({
+            'status': False,
+            'message': str(error),
+        }), 500)
+
+def handle(error):
+    return Response(json.dumps({
+        'status': False,
+        'message': str(error),
+    }), 400)
 
 @app.route('/authenticate', methods=['POST'])
 def auth():
