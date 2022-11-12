@@ -43,11 +43,13 @@ def validate():
             }), 200)
 
     except Exception as error:
-        print(error)
         if str(error) == 'you need to provide an image tag':
             handle(error)
 
         if str(error) == 'your image cannot be null':
+            handle(error)
+        
+        if str(error) == 'Incorrect padding':
             handle(error)
 
         if str(error) == 'predicted class is Non-fingerprint':
