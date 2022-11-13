@@ -24,26 +24,70 @@
             <div class="signin-signup">
                 <form action="#" class="sign-in-form">
                     <h2 class="title">Sign in</h2>
-                    <input type="file" name="fingerprint" class="" />
-                    <input type="submit" value="Login" class="btn solid" />
+                    
+                    <div class="drag-file-area">
+                        <span class="material-icons-outlined upload-icon"><i class="lni lni-upload"></i></span>
+                        <div class="dynamic-message"> Drag & drop your fingerprint </div>
+                        <label class="label"> or 
+                            <span class="browse-files">
+                                <input type="file" name="fingerprint" class="default-file-input"/>
+                                <span class="browse-files-text">browse file</span> file from device
+                            </span>
+                        </label>
+                    </div>
+
+                    <span class="cannot-upload-message">Please
+                        select a file first <i class="lni lni-close cancel-alert-button"></i>
+                    </span>
+
+                    <div class="file-block">
+                        <div class="file-info"> <i class="lni lni-paperclip file-icon"></i> <span
+                                class="file-name"> </span> | <span class="file-size"> </span> </div>
+                            <i class="lni lni-trash-can remove-file-icon"></i>
+                        <div class="progress-bar"> </div>
+                    </div>
+
+                    <input type="submit" value="Login" class="btn solid upload-button" />
                 </form>
+
                 <form action="#" class="sign-up-form">
                     <h2 class="title">Sign up</h2>
                     <div class="input-field">
-                        <i class="lni lni-user"></i>
+                        <i class="lni lni-user icon"></i>
                         <input type="text" placeholder="Username" />
                     </div>
                     <div class="input-field">
-                        <i class="lni lni-envelope"></i>
+                        <i class="lni lni-envelope icon"></i>
                         <input type="email" placeholder="Email" />
                     </div>
                     <div class="input-field">
-                        <i class="lni lni-lock-alt"></i>
+                        <i class="lni lni-lock-alt icon"></i>
                         <input type="password" placeholder="Password" />
                     </div>
 
-                    <input type="file" name="fingerprint" />
-                    <input type="submit" class="btn" value="Sign up" />
+                    <div class="drag-file-area">
+                        <span class="material-icons-outlined upload-icon"><i class="lni lni-upload"></i></span>
+                        <div class="dynamic-message"> Drag & drop your fingerprint </div>
+                        <label class="label"> or 
+                            <span class="browse-files">
+                                <input type="file" name="fingerprint" class="default-file-input"/>
+                                <span class="browse-files-text">browse file</span> file from device
+                            </span>
+                        </label>
+                    </div>
+
+                    <span class="cannot-upload-message"><span class="material-icons-outlined">error</span> Please
+                        select a file first <span class="material-icons-outlined cancel-alert-button">cancel</span>
+                    </span>
+                    
+                    <div class="file-block">
+                        <div class="file-info"> <span class="material-icons-outlined file-icon">description</span> <span
+                                class="file-name"> </span> | <span class="file-size"> </span> </div>
+                        <span class="material-icons remove-file-icon">delete</span>
+                        <div class="progress-bar"> </div>
+                    </div>
+
+                    <input type="submit" class="btn upload-button" value="Sign up" />
                 </form>
             </div>
         </div>
@@ -77,6 +121,7 @@
             </div>
         </div>
     </div>
+    <script src="js/inputFile.js"></script>
     <script src="js/index.js"></script>
 </body>
 
