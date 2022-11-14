@@ -1,0 +1,25 @@
+<form action="/users" method="POST" class="sign-up-form" enctype="multipart/form-data">
+    <h2 class="title">Sign up</h2>
+    <div class="input-field">
+        <i class="lni lni-user icon"></i>
+        <input type="text" name="username" placeholder="Username" />
+    </div>
+    <div class="input-field">
+        <i class="lni lni-envelope icon"></i>
+        <input type="email" name="email" placeholder="Email" />
+    </div>
+    <div class="input-field">
+        <i class="lni lni-lock-alt icon"></i>
+        <input type="password" name="password" placeholder="Password" />
+    </div>
+
+    <select name="accessLevel">
+        <option value="1">Level 1</option>
+        <option value="2">Level 2</option>
+        <option value="3">Level 3</option>
+    </select>
+
+    <input type="file" name="fingerprint"/>
+
+    <input type="submit" class="btn upload-button" value="Sign up" />
+</form>

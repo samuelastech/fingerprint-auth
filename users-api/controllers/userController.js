@@ -1,14 +1,34 @@
 const User = require('../models/User')
+const axios = require('axios').default
 
 class UserController {
+  /**
+   * Check if the given image is a fingerprint or not
+   * @param {String} fingerprint base64 encoded
+   */
+  #verifyFingerPrint = async (fingerprint) => {
+    try {
+      const response = axios.post('http://localhost:5000/validate', {
+        image: fingerprint
+      })
+
+      console.log(response)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   /**
    * Create a user in the database
    */
   create = async (req, res) => {
     try {
+      console.log(req.body)
       const fingerprint = req.file.buffer.toString('base64')
 
       if (!fingerprint) throw new Error('you must provide a fingerprint')
+
+      this.#verifyFingerPrint()
 
       const user = {
         ...JSON.parse(JSON.stringify(req.body)),
