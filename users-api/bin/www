@@ -9,6 +9,13 @@ const debug = require('debug')('biometric-auth:server')
 const http = require('http')
 
 /**
+ * Redis connection.
+ */
+const blacklist = require('../redis/blacklist')
+blacklist.on('connect', () => console.log('Connected to Redis!'))
+blacklist.on('error', (err) => console.log('Redis Client Error', err))
+
+/**
  * Database connection.
  */
 

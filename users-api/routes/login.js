@@ -19,5 +19,6 @@ router.get('/home', session.cookie, (req, res) => {
 })
 router.get('/auth', (req, res) => res.render('form'))
 router.post('/auth', [upload.single('fingerprint'), fingerprint.verify, fingerprint.match], Auth.login)
+router.get('/logout', session.cookie, Auth.logout)
 
 module.exports = router

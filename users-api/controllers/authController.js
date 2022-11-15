@@ -1,5 +1,6 @@
 const User = require('../models/User')
 const jwt = require('jsonwebtoken')
+const blacklist = require('../redis/handleBlacklist')
 
 class Auth {
   login = async (req, res) => {
@@ -7,6 +8,17 @@ class Auth {
     const accessToken = this.#generateJWT(user)
     res.cookie('Authorization', accessToken)
     res.redirect('home')
+  }
+
+  logout = async (req, res) => {
+    try {
+      const accessToken = req.cookies.Authorization
+      await blacklist.add(accessToken)
+      res.clearCookie('Authorization')
+      res.redirect('auth')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   /**
