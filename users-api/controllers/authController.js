@@ -6,8 +6,7 @@ class Auth {
     const user = await User.findById(req.user)
     const accessToken = this.#generateJWT(user)
     res.cookie('Authorization', accessToken)
-    const { username } = user
-    res.render('home', { username })
+    res.redirect('home')
   }
 
   /**

@@ -5,7 +5,7 @@ module.exports = {
   cookie: async (req, res, next) => {
     const accessToken = req.cookies.Authorization
     if (!accessToken) {
-      res.render('form')
+      res.redirect('auth')
     }
 
     const secret = process.env.SECRET_PASS
