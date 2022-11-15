@@ -11,7 +11,12 @@ const Auth = require('../controllers/authController')
  */
 const upload = require('../middlewares/multer')
 const fingerprint = require('../middlewares/fingerprint')
+const session = require('../middlewares/session')
 
+router.get('/home', session.cookie, (req, res) => {
+  const { username } = req.user
+  res.render('home', { username })
+})
 router.get('/auth', (req, res) => res.render('form'))
 router.post('/auth', [upload.single('fingerprint'), fingerprint.verify, fingerprint.match], Auth.login)
 
