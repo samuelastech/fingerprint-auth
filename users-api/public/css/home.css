@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+@import url('normalize.css');
+@import url('variables.css');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+}
+
+header{
+    display: flex;
+    background-image: linear-gradient(-45deg, var(--main-color) 0%, var(--main-color-darken) 100%);
+    justify-content: space-between;
+    padding: 0 100px;
+    margin-bottom: 100px;
+    min-height: 80px;
+}
+
+header h1{
+    color: #fff;
+    margin: auto 0;
+}
+
+header button{
+    margin: auto 0;
+	background: none;
+	border: 2px solid #fff;
+	width: 130px;
+	height: 41px;
+	font-weight: 600;
+	font-size: 0.8rem;
+    cursor: pointer;
+	transition: 0.5s;
+    border-radius: 49px;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 600;
+}
+
+header button:hover {
+	background-color: var(--main-color-darken);
+}
+
+section{
+    max-width: 800px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+section button{
+	width: 95%;
+	background-color: var(--main-color);
+	border: none;
+	outline: none;
+	height: 49px;
+	border-radius: 49px;
+	color: #fff;
+	text-transform: uppercase;
+	font-weight: 600;
+	margin: 10px auto;
+	cursor: pointer;
+	transition: 0.5s;
+}
+
+section button:hover {
+	background-color: var(--main-color-darken);
+}
+
+@media (max-width: 590px){
+    header{
+        padding: 0 15px;
+    }
+    
+    header h1{
+        font-size: 1.5rem;
+    }
+}
