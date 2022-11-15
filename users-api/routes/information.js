@@ -6,10 +6,6 @@ const router = express.Router()
  */
 const session = require('../middlewares/session')
 
-router.get('/information/1', (req, res) => {
-  res.render('info/1')
-})
-
 router.get('/information/2', session.cookie, (req, res) => {
   const { accessLevel } = req.user
 
