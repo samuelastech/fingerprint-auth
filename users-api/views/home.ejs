@@ -29,7 +29,7 @@
         <script>
             window.history.pushState('Object', 'Ministry of Environment | Home', '/home')
 
-            function information(button){
+            async function information(button){
                 const id = parseInt(button.id)
 
                 switch (id) {
@@ -39,17 +39,20 @@
 
                     case 2:
                     case 3:
-                        fetch(`/information/${id}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                // Unauthorized
-                                if(!data.status){
-                                    alert(`Unauthorized\n\nRequired Access: ${data.requiredAccessLevel}\nYour Access: ${data.yourAccessLevel}`)
-                                }else{
-                                    window.location.replace(`/information/${id}`)
-                                }
-                            })
-                            .catch(error => console.log(error))
+                        try {
+                            const response = await fetch(`/information/${id}`)
+
+                            // Unauthorized
+                            if(response.status != 200){
+                                const data = await response.json()
+                                alert(`Unauthorized\n\nRequired Access: ${data.requiredAccessLevel}\nYour Access: ${data.yourAccessLevel}`)
+                            }else{
+                                window.location.replace(`/information/${id}`)
+                            }
+                        } catch (error) {
+                            console.log(error)
+                        }
+
                         break;
                 }
             }

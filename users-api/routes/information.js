@@ -14,7 +14,7 @@ router.get('/information/2', session.cookie, (req, res) => {
     handleUnauthorized(res, [2, 3], accessLevel)
   }
 
-  return res.render('info/2')
+  res.render('info/2')
 })
 
 router.get('/information/3', session.cookie, (req, res) => {
@@ -25,7 +25,7 @@ router.get('/information/3', session.cookie, (req, res) => {
     return handleUnauthorized(res, [3], accessLevel)
   }
 
-  return res.render('info/3')
+  res.render('info/3')
 })
 
 /**
